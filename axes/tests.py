@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import random
 import string
 import time
@@ -973,6 +975,20 @@ class UtilsTest(TestCase):
         path_info = '/admin/'
 
         details = "{{user: '{0}', ip: '{1}', user-agent: '{2}', path: '{3}'}}"
+        expected = details.format(username, ip, user_agent, path_info)
+        actual = get_client_str(username, ip, user_agent, path_info)
+
+        self.assertEqual(expected, actual)
+
+    @patch('axes.decorators.AXES_ONLY_USER_FAILURES', True)
+    @patch('axes.decorators.VERBOSE', True)
+    def test_verbose_user_only_client_details_unicode(self):
+        username = u'tést@exàmple.com'
+        ip = '127.0.0.1'
+        user_agent = 'Googlebot/2.1 (+http://www.googlebot.com/bot.html)'
+        path_info = '/admin/'
+
+        details = u"{{user: '{0}', ip: '{1}', user-agent: '{2}', path: '{3}'}}"
         expected = details.format(username, ip, user_agent, path_info)
         actual = get_client_str(username, ip, user_agent, path_info)
 
