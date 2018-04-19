@@ -53,12 +53,12 @@ def get_client_str(username, ip_address, user_agent=None, path_info=None):
     if AXES_ONLY_USER_FAILURES:
         client = username
     elif LOCK_OUT_BY_COMBINATION_USER_AND_IP:
-        client = '{0} from {1}'.format(username, ip_address)
+        client = u'{0} from {1}'.format(username, ip_address)
     else:
         client = ip_address
 
     if USE_USER_AGENT:
-        return client + '(user-agent={0})'.format(user_agent)
+        return client + u'(user-agent={0})'.format(user_agent)
 
     return client
 
@@ -66,27 +66,27 @@ def get_client_str(username, ip_address, user_agent=None, path_info=None):
 def log_successful_attempt(username, ip_address,
                            user_agent=None, path_info=None):
     client = get_client_str(username, ip_address, user_agent, path_info)
-    msg = 'AXES: Successful login by {0}. Creating access record.'
+    msg = u'AXES: Successful login by {0}. Creating access record.'
     log.info(msg.format(client))
 
 
 def log_initial_attempt(username, ip_address, user_agent, path_info):
     client = get_client_str(username, ip_address, user_agent, path_info)
-    msg = 'AXES: New login failure by {0}. Creating access record.'
+    msg = u'AXES: New login failure by {0}. Creating access record.'
     log.info(msg.format(client))
 
 
 def log_repeated_attempt(username, ip_address, user_agent, path_info,
                          fail_count):
     client = get_client_str(username, ip_address, user_agent, path_info)
-    fail_msg = 'AXES: Repeated login failure by {0}. Updating access record.'
-    count_msg = 'Count = {0} of {1}'.format(fail_count, FAILURE_LIMIT)
-    log.info('{0} {1}'.format(fail_msg.format(client), count_msg))
+    fail_msg = u'AXES: Repeated login failure by {0}. Updating access record.'
+    count_msg = u'Count = {0} of {1}'.format(fail_count, FAILURE_LIMIT)
+    log.info(u'{0} {1}'.format(fail_msg.format(client), count_msg))
 
 
 def log_lockout(username, ip_address, user_agent, path_info):
     client = get_client_str(username, ip_address, user_agent, path_info)
-    msg = 'AXES: locked out {0} after repeated login attempts.'
+    msg = u'AXES: locked out {0} after repeated login attempts.'
     log.warn(msg.format(client))
 
 
